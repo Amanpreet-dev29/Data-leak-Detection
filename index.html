@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="DataShield Scanner — Detect and mask sensitive data in real-time.">
+    <title>Scanner — DataShield</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+<body>
+
+    <!-- Toast Container -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="index.html" class="navbar-brand">
+            <div class="navbar-logo">🛡️</div>
+            <span class="navbar-title">DataShield</span>
+        </a>
+        <ul class="navbar-links">
+            <li><a href="index.html" class="active" id="nav-scanner">🔍 <span>Scanner</span></a></li>
+            <li><a href="dashboard.html" id="nav-dashboard">📊 <span>Dashboard</span></a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-container">
+
+        <!-- Page Header -->
+        <header class="page-header">
+            <h1>🔍 Data Leak Scanner</h1>
+            <p>Analyze emails, texts, and documents for sensitive data in real-time.</p>
+        </header>
+
+        <!-- Scan Section -->
+        <div class="scan-section">
+            <div class="glass-card">
+                <div class="card-header">
+                    <h2>📝 Input Monitoring</h2>
+                    <div id="realtime-indicator" class="status-badge status-warning" style="display: none;">
+                        <span class="pulse-dot"></span> <span>Monitoring...</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    
+                    <div class="source-selector" style="margin-bottom: 20px;">
+                        <button class="source-btn active" data-source="email" onclick="setSource('email')">
+                            <span class="icon">📧</span> Email
+                        </button>
+                        <button class="source-btn" data-source="chat" onclick="setSource('chat')">
+                            <span class="icon">💬</span> Chat
+                        </button>
+                        <button class="source-btn" data-source="document" onclick="setSource('document')">
+                            <span class="icon">📄</span> Document
+                        </button>
+                        <button class="source-btn" data-source="spam" onclick="setSource('spam')">
+                            <span class="icon">🎣</span> Spam
+                        </button>
+                    </div>
+
+                    <div class="input-group">
+                        <textarea id="scan-input" class="scan-textarea" placeholder="Paste your data here..."></textarea>
+                        <div class="textarea-footer">
+                            <span id="char-count">0 characters</span>
+                            <span id="word-count">0 words</span>
+                        </div>
+                    </div>
+
+                    <div class="action-bar" style="margin-top: 20px;">
+                        <button id="scan-btn" class="btn btn-primary" onclick="scanText()">
+                            <span class="btn-icon">🔍</span> Scan for Leaks
+                        </button>
+                        <button class="btn btn-secondary" onclick="maskAllData()">
+                            <span class="btn-icon">🔒</span> Mask Data
+                        </button>
+                        <button class="btn btn-outline" onclick="loadSampleData()">
+                            <span class="btn-icon">📄</span> Load Sample
+                        </button>
+                        <button class="btn btn-danger" onclick="clearAll()">
+                            <span class="btn-icon">🗑️</span> Clear
+                        </button>
+                    </div>
+                    
+                    <div id="file-upload-zone" class="file-upload-zone" style="margin-top: 32px;">
+                        <div class="upload-glow"></div>
+                        <div class="upload-icon">📤</div>
+                        <div class="upload-text">
+                            <h3>Upload Document or Image</h3>
+                            <p>Drag & drop or <strong>browse</strong> files</p>
+                            <span class="file-info">Supports .txt, .csv, .log, .json, .md, .png, .jpg, .jpeg</span>
+                        </div>
+                        <input type="file" id="fileInput" accept=".txt,.csv,.log,.json,.md,.html,image/png,image/jpeg,image/jpg" onchange="handleFileUpload(event)">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Section -->
+        <div class="glass-card results-section" id="results-section">
+            <div class="card-header">
+                <h2>🚨 Results</h2>
+            </div>
+            <div class="card-body">
+                <div id="results-summary" class="results-summary"></div>
+                <div id="findings-list"></div>
+            </div>
+        </div>
+
+        <!-- Masked Output Section -->
+        <div class="glass-card masked-output" id="masked-output">
+            <div class="card-header">
+                <h2>🔒 Protected Output</h2>
+            </div>
+            <div class="card-body">
+                <div class="masked-text-container">
+                    <button class="copy-btn" onclick="copyMaskedText()">📋 Copy</button>
+                    <div id="masked-text" class="masked-text"></div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+    <script src="../static/js/main.js"></script>
+</body>
+</html>

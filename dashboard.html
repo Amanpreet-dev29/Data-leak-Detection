@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="DataShield Dashboard — View scan analytics, leak statistics, and recent activity.">
+    <title>Dashboard — DataShield</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="index.html" class="navbar-brand">
+            <div class="navbar-logo">🛡️</div>
+            <span class="navbar-title">DataShield</span>
+        </a>
+        <ul class="navbar-links">
+            <li><a href="index.html" id="nav-scanner">🔍 <span>Scanner</span></a></li>
+            <li><a href="dashboard.html" class="active" id="nav-dashboard">📊 <span>Dashboard</span></a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-container">
+
+        <!-- Page Header -->
+        <header class="page-header">
+            <h1>📊 Analytics Dashboard</h1>
+            <p>Monitor scanning activity, track detected leaks, and review your data protection posture.</p>
+        </header>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card cyan">
+                <div class="stat-icon">🔍</div>
+                <div class="stat-info">
+                    <div class="stat-value" id="stat-total-scans">0</div>
+                    <div class="stat-label">Total Scans</div>
+                </div>
+            </div>
+            <div class="stat-card red">
+                <div class="stat-icon">🚨</div>
+                <div class="stat-info">
+                    <div class="stat-value" id="stat-leaks-detected">0</div>
+                    <div class="stat-label">Leaks Detected</div>
+                </div>
+            </div>
+            <div class="stat-card purple">
+                <div class="stat-icon">📧</div>
+                <div class="stat-info">
+                    <div class="stat-value" id="stat-emails">0</div>
+                    <div class="stat-label">Emails Found</div>
+                </div>
+            </div>
+            <div class="stat-card orange">
+                <div class="stat-icon">📱</div>
+                <div class="stat-info">
+                    <div class="stat-value" id="stat-phones">0</div>
+                    <div class="stat-label">Phones Found</div>
+                </div>
+            </div>
+            <div class="stat-card red">
+                <div class="stat-icon">💳</div>
+                <div class="stat-info">
+                    <div class="stat-value" id="stat-cards">0</div>
+                    <div class="stat-label">Cards Found</div>
+                </div>
+            </div>
+            <div class="stat-card green">
+                <div class="stat-icon">🔑</div>
+                <div class="stat-info">
+                    <div class="stat-value" id="stat-passwords">0</div>
+                    <div class="stat-label">Passwords Found</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Chart + Detection Breakdown -->
+        <div class="two-col">
+            <!-- Donut Chart -->
+            <div class="glass-card">
+                <div class="card-header">
+                    <h2>📈 Detection Breakdown</h2>
+                </div>
+                <div class="donut-chart">
+                    <canvas id="type-chart"></canvas>
+                </div>
+                <div class="chart-legend" id="chart-legend"></div>
+            </div>
+
+            <!-- Security Tips -->
+            <div class="glass-card">
+                <div class="card-header">
+                    <h2>🛡️ Security Recommendations</h2>
+                </div>
+                <div class="card-body">
+                    <div style="display: flex; flex-direction: column; gap: 14px;">
+                        <div class="tip-card">
+                            <div class="tip-icon">🔐</div>
+                            <h4>Data Encryption</h4>
+                            <p>Encrypt sensitive data at rest and in transit using AES-256 or TLS 1.3.</p>
+                        </div>
+                        <div class="tip-card">
+                            <div class="tip-icon">📋</div>
+                            <h4>Regular Audits</h4>
+                            <p>Schedule weekly scans of outgoing communications for data leak prevention.</p>
+                        </div>
+                        <div class="tip-card">
+                            <div class="tip-icon">👥</div>
+                            <h4>Employee Training</h4>
+                            <p>Train staff to recognize and prevent accidental data leaks in communications.</p>
+                        </div>
+                        <div class="tip-card">
+                            <div class="tip-icon">⚙️</div>
+                            <h4>Access Controls</h4>
+                            <p>Implement role-based access controls (RBAC) to limit sensitive data exposure.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scan History Table -->
+        <section class="glass-card" style="margin-top: 24px;">
+            <div class="card-header">
+                <h2>🕐 Recent Scan History</h2>
+                <div class="realtime-indicator">
+                    <div class="realtime-dot"></div>
+                    <span>Live Feed: 3s</span>
+                </div>
+            </div>
+            <div class="card-body" style="padding: 0;">
+                <div style="overflow-x: auto;">
+                    <table class="history-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Timestamp</th>
+                                <th>Source</th>
+                                <th>Findings</th>
+                                <th>Preview</th>
+                            </tr>
+                        </thead>
+                        <tbody id="history-body">
+                            <tr>
+                                <td colspan="5" style="text-align: center; padding: 40px;">
+                                    <div class="empty-state">
+                                        <div class="empty-icon">📋</div>
+                                        <h3>No scans yet</h3>
+                                        <p>Go to the scanner page and run your first scan.</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="../static/js/dashboard.js"></script>
+</body>
+</html>
